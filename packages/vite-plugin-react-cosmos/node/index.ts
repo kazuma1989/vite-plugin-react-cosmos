@@ -31,7 +31,7 @@ export default function cosmos({
   })
 
   return {
-    name: "@es-mieru/cosmos",
+    name: "vite-plugin-react-cosmos",
 
     config({ root }) {
       return {
