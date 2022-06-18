@@ -25,7 +25,7 @@
     "update-public": "cosmos-export",
     "build": "pnpm run build:client && pnpm run build:node",
     "build:client": "esbuild ./client/index.ts --bundle --outfile=./client/index.js --platform=browser --format=esm --external:react --external:react-cosmos",
-    "build:node": "esbuild ./node/index.ts --bundle --outfile=./node/index.cjs --platform=node --external:./node_modules/*"
+    "build:node": "esbuild ./node/index.ts --bundle --outfile=./node/index.cjs --platform=node --external:es-module-lexer --external:fast-glob --external:vite"
   },
   "dependencies": {
     "es-module-lexer": "0.10.5",
@@ -42,7 +42,6 @@
   "peerDependencies": {
     "react": ">=17.0",
     "react-cosmos": ">=5.7",
-    "sirv": ">=2",
     "vite": ">=2.9"
   }
 }
