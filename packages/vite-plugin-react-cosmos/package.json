@@ -24,7 +24,7 @@
   "scripts": {
     "update-public": "cosmos-export",
     "build": "pnpm run build:client && pnpm run build:node",
-    "build:client": "esbuild ./client/index.ts --bundle --outfile=./client/index.js --platform=browser --format=esm --external:virtual:* --external:react --external:react-cosmos",
+    "build:client": "esbuild ./client/index.ts --bundle --outfile=./client/index.js --platform=browser --format=esm --external:react --external:react-cosmos",
     "build:node": "esbuild ./node/index.ts --bundle --outfile=./node/index.cjs --platform=node --external:./node_modules/*"
   },
   "dependencies": {

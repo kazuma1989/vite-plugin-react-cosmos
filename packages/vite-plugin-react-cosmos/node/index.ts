@@ -1,12 +1,15 @@
 import * as fs from "node:fs/promises"
 import * as path from "node:path"
+import { debuglog } from "node:util"
 import { Plugin } from "vite"
 import { generateFixtures } from "./generateFixtures"
 import { sendContentMiddleware } from "./sendContentMiddleware"
 import { servePublicMiddleware } from "./servePublicMiddleware"
 import { transformEntryHTML } from "./transformEntryHTML"
 
-interface Config {
+const debug = debuglog("vite-plugin-react-cosmos")
+
+export interface Options {
   decoratorsGlob?: string
   fixturesGlob?: string
   fixturesJSONFileName?: string
@@ -19,10 +22,10 @@ export default function cosmos({
   decoratorsGlob = "/src/**/*.decorator.tsx",
   fixturesGlob = "/src/**/*.stories.tsx",
   fixturesJSONFileName = "fixtures.json",
-  rendererFileName = "catalog.html",
-  entryFileName = "index.html",
+  rendererFileName = "cosmos-renderer.html",
+  entryFileName = "cosmos.html",
   projectId = "vite-cosmos",
-}: Config = {}): Plugin {
+}: Options = {}): Plugin {
   let root: string
 
   const transform = transformEntryHTML({
@@ -33,11 +36,32 @@ export default function cosmos({
   return {
     name: "vite-plugin-react-cosmos",
 
-    config({ root }) {
+    config(config) {
+      const { root } = config
+
+      debug("user defined entry points", config.build?.rollupOptions?.input)
+
+      const implicitIndexCollision =
+        entryFileName === "index.html" && !config.build?.rollupOptions?.input
+      if (implicitIndexCollision) {
+        // If the plugin will try to emit an index.html and the user did not specify any entry point,
+        // keep the user-defined entry point empty to make the index.html alive.
+      } else {
+        // Otherwise keep user's index.html alive.
+        config.build ??= {}
+        config.build.rollupOptions ??= {}
+        config.build.rollupOptions.input ??= path.resolve(
+          root ?? "",
+          "index.html"
+        )
+      }
+
+      const cosmosRenderer = path.resolve(root ?? "", rendererFileName)
+
       return {
         build: {
           rollupOptions: {
-            input: path.resolve(root ?? "", rendererFileName),
+            input: [cosmosRenderer],
           },
         },
 
@@ -49,28 +73,42 @@ export default function cosmos({
     },
 
     configResolved(config) {
+      debug("final entry points", config.build.rollupOptions.input)
+
       root = config.root
     },
 
-    resolveId(id) {
-      if (id === "virtual:cosmos/globs") {
-        return "\0" + "virtual:cosmos/globs"
-      }
-    },
+    transform(code: string, id: string) {
+      if (
+        id.endsWith("/client/index.js") &&
+        code.includes("import.meta.cosmos.")
+      ) {
+        const options: Required<Options> = {
+          decoratorsGlob,
+          fixturesGlob,
+          fixturesJSONFileName,
+          rendererFileName,
+          entryFileName,
+          projectId,
+        }
 
-    load(id) {
-      if (id === "\0" + "virtual:cosmos/globs") {
-        const decoratorsLiteral = JSON.stringify(decoratorsGlob)
-        const fixturesLiteral = JSON.stringify(fixturesGlob)
-        const filenameLiteral = JSON.stringify(fixturesJSONFileName)
-
-        return [
-          `export const decoratorsImport = import.meta.globEager(${decoratorsLiteral})`,
-          `export const fixturesImport = import.meta.globEager(${fixturesLiteral})`,
-          `export const decoratorsGlob = ${decoratorsLiteral}`,
-          `export const fixturesGlob = ${fixturesLiteral}`,
-          `export const fixturesJSONFileName = ${filenameLiteral}`,
-        ].join("\n")
+        return {
+          code: code
+            .replaceAll("import.meta.cosmos.options", JSON.stringify(options))
+            .replaceAll(
+              "import.meta.cosmos.globEager",
+              "{" +
+                [
+                  `decorators: import.meta.globEager(${JSON.stringify(
+                    decoratorsGlob
+                  )})`,
+                  `fixtures: import.meta.globEager(${JSON.stringify(
+                    fixturesGlob
+                  )})`,
+                ].join(",") +
+                "}"
+            ),
+        }
       }
     },
 
@@ -133,14 +171,6 @@ export default function cosmos({
             () => generateFixtures(fixturesGlob, root).then(JSON.stringify),
             config.server.headers
           )
-        )
-
-        middlewares.use(
-          "/index.html",
-          function hideIndexHTMLMiddleware(_, res) {
-            res.statusCode = 404
-            res.end()
-          }
         )
 
         middlewares.use(

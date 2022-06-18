@@ -1,13 +1,23 @@
-/// <reference path="./virtual.d.ts" />
-
 import React from "react"
 import { DomFixtureLoader as CosmosDomFixtureLoader } from "react-cosmos/dist/dom/DomFixtureLoader.js"
 import "react-cosmos/dom" // polyfill "regenerator-runtime"
-import { decoratorsImport, fixturesImport } from "virtual:cosmos/globs"
 
-export * from "virtual:cosmos/globs"
+interface ImportMeta {
+  cosmos: {
+    options: Required<import("../node/index").Options>
+    globEager: {
+      decorators: Record<string, { [key: string]: any }>
+      fixtures: Record<string, { [key: string]: any }>
+    }
+  }
+}
+
+export const options = (import.meta as unknown as ImportMeta).cosmos.options
 
 export function DomFixtureLoader() {
+  const { decorators, fixtures } = (import.meta as unknown as ImportMeta).cosmos
+    .globEager
+
   return CosmosDomFixtureLoader({
     /**
      * @example
@@ -16,7 +26,7 @@ export function DomFixtureLoader() {
      * }
      */
     decorators: Object.fromEntries(
-      Object.entries(decoratorsImport).map(([path, exports]) => [
+      Object.entries(decorators).map(([path, exports]) => [
         path,
         exports.default,
       ])
@@ -30,7 +40,7 @@ export function DomFixtureLoader() {
      * }
      */
     fixtures: Object.fromEntries(
-      Object.entries(fixturesImport).map(([path, exports]) => [
+      Object.entries(fixtures).map(([path, exports]) => [
         path,
         { module: { default: exports } },
       ])

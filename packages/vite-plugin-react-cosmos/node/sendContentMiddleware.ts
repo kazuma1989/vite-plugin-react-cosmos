@@ -1,5 +1,6 @@
 import * as http from "node:http"
 import { Connect, send } from "vite"
+import { cleanUrl } from "./cleanUrl"
 
 export function sendContentMiddleware(
   type: string,
@@ -19,11 +20,4 @@ export function sendContentMiddleware(
       next(e)
     }
   }
-}
-
-const queryRE = /\?.*$/s
-const hashRE = /#.*$/s
-
-function cleanUrl(url: string): string {
-  return url.replace(hashRE, "").replace(queryRE, "")
 }

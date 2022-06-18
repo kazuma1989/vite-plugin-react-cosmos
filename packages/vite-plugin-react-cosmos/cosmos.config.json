@@ -5,5 +5,5 @@
   "fixturesDir": "/dev/null",
   "fixtureFileSuffix": "stories",
   "userDepsFilePath": "/dev/null",
-  "experimentalRendererUrl": "catalog.html"
+  "experimentalRendererUrl": "cosmos-renderer.html"
 }
