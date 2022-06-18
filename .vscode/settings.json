@@ -1,0 +1,16 @@
+{
+  // Prettier on save.
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // ESLint on save.
+  "eslint.run": "onSave",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  // Targets are only TS(X).
+  "eslint.probe": ["typescript", "typescriptreact"],
+
+  // Specify TypeScript version.
+  "typescript.tsdk": "node_modules/typescript/lib"
+}

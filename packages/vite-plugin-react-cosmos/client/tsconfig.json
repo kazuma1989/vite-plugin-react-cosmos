@@ -1,0 +1,14 @@
+// https://www.typescriptlang.org/ja/tsconfig
+{
+  "extends": "@tsconfig/vite-react/tsconfig.json",
+
+  "include": ["**/*"],
+
+  "compilerOptions": {
+    "types": ["vite/client"],
+
+    "noUncheckedIndexedAccess": true,
+    "jsx": "react-jsx",
+    "skipLibCheck": true
+  }
+}

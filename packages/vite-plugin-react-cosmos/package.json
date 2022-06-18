@@ -1,0 +1,43 @@
+{
+  "name": "vite-plugin-react-cosmos",
+  "version": "0.0.1",
+  "keywords": [
+    "vite-plugin"
+  ],
+  "types": "./node/index.ts",
+  "main": "./node/index.cjs",
+  "exports": {
+    ".": {
+      "types": "./node/index.ts",
+      "require": "./node/index.cjs"
+    },
+    "./client": {
+      "types": "./client/index.ts",
+      "import": "./client/index.js"
+    }
+  },
+  "scripts": {
+    "update-public": "cosmos-export",
+    "build": "pnpm run build:client && pnpm run build:node",
+    "build:client": "esbuild ./client/index.ts --bundle --outfile=./client/index.js --platform=browser --format=esm --external:virtual:* --external:react --external:react-cosmos",
+    "build:node": "esbuild ./node/index.ts --bundle --outfile=./node/index.cjs --platform=node --external:./node_modules/*"
+  },
+  "dependencies": {
+    "es-module-lexer": "0.10.5",
+    "fast-glob": "3.2.11"
+  },
+  "devDependencies": {
+    "@tsconfig/vite-react": "1.0.0",
+    "@types/react": "18.0.12",
+    "esbuild": "0.14.43",
+    "react-cosmos": "5.7.2",
+    "sirv": "2.0.2",
+    "vite": "2.9.10"
+  },
+  "peerDependencies": {
+    "react": ">=17.0",
+    "react-cosmos": ">=5.7",
+    "sirv": ">=2",
+    "vite": ">=2.9"
+  }
+}

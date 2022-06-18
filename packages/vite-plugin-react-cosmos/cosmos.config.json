@@ -1,0 +1,9 @@
+{
+  "$schema": "./node_modules/react-cosmos/config.schema.json",
+
+  "exportPath": "./public/",
+  "fixturesDir": "/dev/null",
+  "fixtureFileSuffix": "stories",
+  "userDepsFilePath": "/dev/null",
+  "experimentalRendererUrl": "catalog.html"
+}
