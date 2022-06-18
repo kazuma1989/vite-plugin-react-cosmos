@@ -4,6 +4,11 @@
   "keywords": [
     "vite-plugin"
   ],
+  "files": [
+    "client/*",
+    "node/*",
+    "public/*"
+  ],
   "types": "./node/index.ts",
   "main": "./node/index.cjs",
   "exports": {
