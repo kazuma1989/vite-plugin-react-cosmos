@@ -1,7 +1,7 @@
-/packages/cosmos/client/index.js
-/packages/cosmos/node/index.cjs
-/packages/cosmos/public/_playground.js
-/packages/cosmos/public/index.html
+/packages/vite-plugin-react-cosmos/client/index.js
+/packages/vite-plugin-react-cosmos/node/index.cjs
+/packages/vite-plugin-react-cosmos/public/_playground.js
+/packages/vite-plugin-react-cosmos/public/index.html
 
 build/
 pnpm-lock.yaml
