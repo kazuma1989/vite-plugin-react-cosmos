@@ -65,6 +65,15 @@ export default function cosmos({
           },
         },
 
+        optimizeDeps: {
+          include: [
+            "react",
+            "react-cosmos/dist/dom/DomFixtureLoader.js",
+            "react-cosmos/dom",
+          ],
+          exclude: ["vite-plugin-react-cosmos/client"],
+        },
+
         define: {
           // A fix for ../node_modules/react-cosmos/dist/dom/ErrorCatch.js
           __DEV__: JSON.stringify(false),
@@ -80,7 +89,7 @@ export default function cosmos({
 
     transform(code: string, id: string) {
       if (
-        id.endsWith("/client/index.js") &&
+        id.includes("/vite-plugin-react-cosmos/client/index.js") &&
         code.includes("import.meta.cosmos.")
       ) {
         const options: Required<Options> = {
