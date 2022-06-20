@@ -3,12 +3,20 @@
   "extends": "@tsconfig/vite-react/tsconfig.json",
 
   "include": ["**/*"],
+  "exclude": ["**/*.d.ts"],
 
   "compilerOptions": {
+    "composite": true,
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+
     "types": ["vite/client"],
 
     "noUncheckedIndexedAccess": true,
     "jsx": "react-jsx",
     "skipLibCheck": true
-  }
+  },
+
+  "references": [{ "path": "../node/tsconfig.json" }]
 }

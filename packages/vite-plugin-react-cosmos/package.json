@@ -1,32 +1,39 @@
 {
   "name": "vite-plugin-react-cosmos",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "keywords": [
     "vite-plugin"
   ],
   "files": [
-    "client/*",
-    "node/*",
+    "node/index.d.ts",
+    "node/index.cjs",
+    "client/index.d.ts",
+    "client/index.js",
+    "client/lib.js",
     "public/*"
   ],
-  "types": "./node/index.ts",
+  "types": "./node/index.d.ts",
   "main": "./node/index.cjs",
   "exports": {
     ".": {
-      "types": "./node/index.ts",
+      "types": "./node/index.d.ts",
       "require": "./node/index.cjs"
     },
     "./client": {
-      "types": "./client/index.ts",
+      "types": "./client/index.d.ts",
       "import": "./client/index.js"
     }
   },
   "scripts": {
     "update-public": "cosmos-export",
-    "build": "pnpm run build:client && pnpm run build:lib && pnpm run build:node",
-    "build:client": "esbuild ./client/index.ts --outfile=./client/index.js --platform=browser --format=esm",
-    "build:lib": "esbuild ./client/lib.ts --inject:./client/shim-react.js --bundle --outfile=./client/lib.js --platform=browser --format=esm --external:react",
-    "build:node": "esbuild ./node/index.ts --bundle --outfile=./node/index.cjs --platform=node --external:es-module-lexer --external:fast-glob --external:vite"
+    "build": "pnpm run build:js && pnpm run build:types",
+    "build:js": "pnpm run build:js:client && pnpm run build:js:lib && pnpm run build:js:node",
+    "build:js:client": "esbuild ./client/index.ts --outfile=./client/index.js --platform=browser --format=esm",
+    "build:js:lib": "esbuild ./client/lib.ts --inject:./client/shim-react.js --bundle --outfile=./client/lib.js --platform=browser --format=esm --external:react",
+    "build:js:node": "esbuild ./node/index.ts --bundle --outfile=./node/index.cjs --platform=node --external:es-module-lexer --external:fast-glob --external:vite",
+    "build:types": "pnpm run build:types:node && pnpm run build:types:client",
+    "build:types:client": "tsc --project ./client/tsconfig.json",
+    "build:types:node": "tsc --project ./node/tsconfig.json"
   },
   "dependencies": {
     "es-module-lexer": "0.10.5",

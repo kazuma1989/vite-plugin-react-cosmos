@@ -1,9 +1,10 @@
 import React from "react"
+import { Options } from "../node"
 import { DomFixtureLoader as CosmosDomFixtureLoader } from "./lib"
 
 interface ImportMeta {
   cosmos: {
-    options: Required<import("../node/index").Options>
+    options: Required<Options>
     globEager: {
       decorators: Record<string, { [key: string]: any }>
       fixtures: Record<string, { [key: string]: any }>

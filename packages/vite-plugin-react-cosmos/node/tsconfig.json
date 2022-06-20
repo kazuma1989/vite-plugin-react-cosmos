@@ -1,8 +1,14 @@
 // https://www.typescriptlang.org/ja/tsconfig
 {
   "include": ["**/*"],
+  "exclude": ["**/*.d.ts"],
 
   "compilerOptions": {
+    "composite": true,
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+
     "lib": ["ES2021"],
     "module": "CommonJS",
     "target": "ES2021",

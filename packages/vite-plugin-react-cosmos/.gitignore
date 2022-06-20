@@ -1,0 +1,5 @@
+*.d.ts
+!/client/index.d.ts
+!/node/index.d.ts
+
+tsconfig.tsbuildinfo

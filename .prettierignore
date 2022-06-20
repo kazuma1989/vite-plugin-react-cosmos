@@ -4,6 +4,7 @@
 /packages/vite-plugin-react-cosmos/public/_playground.js
 /packages/vite-plugin-react-cosmos/public/index.html
 
+*.d.ts
 build/
 dist/
 pnpm-lock.yaml
