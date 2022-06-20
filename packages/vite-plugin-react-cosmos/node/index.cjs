@@ -817,11 +817,6 @@ function cosmos({
           }
         },
         optimizeDeps: {
-          include: [
-            "react",
-            "react-cosmos/dist/dom/DomFixtureLoader.js",
-            "react-cosmos/dom"
-          ],
           exclude: ["vite-plugin-react-cosmos/client"]
         },
         define: {

@@ -1,4 +1,5 @@
 /packages/vite-plugin-react-cosmos/client/index.js
+/packages/vite-plugin-react-cosmos/client/lib.js
 /packages/vite-plugin-react-cosmos/node/index.cjs
 /packages/vite-plugin-react-cosmos/public/_playground.js
 /packages/vite-plugin-react-cosmos/public/index.html

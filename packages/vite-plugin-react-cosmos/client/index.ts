@@ -1,6 +1,5 @@
 import React from "react"
-import { DomFixtureLoader as CosmosDomFixtureLoader } from "react-cosmos/dist/dom/DomFixtureLoader.js"
-import "react-cosmos/dom" // polyfill "regenerator-runtime"
+import { DomFixtureLoader as CosmosDomFixtureLoader } from "./lib"
 
 interface ImportMeta {
   cosmos: {

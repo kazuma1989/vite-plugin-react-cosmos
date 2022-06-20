@@ -23,8 +23,9 @@
   },
   "scripts": {
     "update-public": "cosmos-export",
-    "build": "pnpm run build:client && pnpm run build:node",
+    "build": "pnpm run build:client && pnpm run build:lib && pnpm run build:node",
     "build:client": "esbuild ./client/index.ts --outfile=./client/index.js --platform=browser --format=esm",
+    "build:lib": "esbuild ./client/lib.ts --inject:./client/shim-react.js --bundle --outfile=./client/lib.js --platform=browser --format=esm --external:react",
     "build:node": "esbuild ./node/index.ts --bundle --outfile=./node/index.cjs --platform=node --external:es-module-lexer --external:fast-glob --external:vite"
   },
   "dependencies": {
@@ -41,7 +42,6 @@
   },
   "peerDependencies": {
     "react": ">=17.0",
-    "react-cosmos": ">=5.7",
     "vite": ">=2.9"
   }
 }
