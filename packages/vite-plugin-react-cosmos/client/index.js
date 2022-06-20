@@ -1,8 +1,7 @@
-// client/index.ts
 import React from "react";
 import { DomFixtureLoader as CosmosDomFixtureLoader } from "react-cosmos/dist/dom/DomFixtureLoader.js";
 import "react-cosmos/dom";
-var options = import.meta.cosmos.options;
+const options = import.meta.cosmos.options;
 function DomFixtureLoader() {
   const { decorators, fixtures } = import.meta.cosmos.globEager;
   return CosmosDomFixtureLoader({
