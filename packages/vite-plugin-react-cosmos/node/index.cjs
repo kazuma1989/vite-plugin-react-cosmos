@@ -829,7 +829,7 @@ function cosmos({
       root = config.root;
     },
     transform(code, id) {
-      if (id.includes("/vite-plugin-react-cosmos/client/index.js") && code.includes("import.meta.cosmos.")) {
+      if (id.includes("/vite-plugin-react-cosmos/client/index.js") && code.includes("import.meta.cosmos")) {
         const options = {
           decoratorsGlob,
           fixturesGlob,
@@ -838,11 +838,15 @@ function cosmos({
           entryFileName,
           projectId
         };
+        const cosmos2 = {
+          options,
+          glob: {
+            decorators: "__DECORATORS__",
+            fixtures: "__FIXTURES__"
+          }
+        };
         return {
-          code: code.replaceAll("import.meta.cosmos.options", JSON.stringify(options)).replaceAll("import.meta.cosmos.globEager", "{" + [
-            `decorators: import.meta.globEager(${JSON.stringify(decoratorsGlob)})`,
-            `fixtures: import.meta.globEager(${JSON.stringify(fixturesGlob)})`
-          ].join(",") + "}")
+          code: code.replaceAll("import.meta.cosmos", JSON.stringify(cosmos2).replaceAll(`"__DECORATORS__"`, `import.meta.globEager(${JSON.stringify(decoratorsGlob)})`).replaceAll(`"__FIXTURES__"`, `import.meta.globEager(${JSON.stringify(fixturesGlob)})`))
         };
       }
     },

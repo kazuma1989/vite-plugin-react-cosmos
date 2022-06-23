@@ -85,7 +85,7 @@ export default function cosmos({
     transform(code: string, id: string) {
       if (
         id.includes("/vite-plugin-react-cosmos/client/index.js") &&
-        code.includes("import.meta.cosmos.")
+        code.includes("import.meta.cosmos")
       ) {
         const options: Required<Options> = {
           decoratorsGlob,
@@ -96,22 +96,27 @@ export default function cosmos({
           projectId,
         }
 
+        const cosmos = {
+          options,
+          glob: {
+            decorators: "__DECORATORS__",
+            fixtures: "__FIXTURES__",
+          },
+        }
+
         return {
-          code: code
-            .replaceAll("import.meta.cosmos.options", JSON.stringify(options))
-            .replaceAll(
-              "import.meta.cosmos.globEager",
-              "{" +
-                [
-                  `decorators: import.meta.globEager(${JSON.stringify(
-                    decoratorsGlob
-                  )})`,
-                  `fixtures: import.meta.globEager(${JSON.stringify(
-                    fixturesGlob
-                  )})`,
-                ].join(",") +
-                "}"
-            ),
+          code: code.replaceAll(
+            "import.meta.cosmos",
+            JSON.stringify(cosmos)
+              .replaceAll(
+                `"__DECORATORS__"`,
+                `import.meta.globEager(${JSON.stringify(decoratorsGlob)})`
+              )
+              .replaceAll(
+                `"__FIXTURES__"`,
+                `import.meta.globEager(${JSON.stringify(fixturesGlob)})`
+              )
+          ),
         }
       }
     },

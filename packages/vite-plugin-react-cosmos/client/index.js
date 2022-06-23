@@ -1,8 +1,12 @@
 import React from "react";
 import { DomFixtureLoader as CosmosDomFixtureLoader } from "./lib";
-const options = import.meta.cosmos.options;
+const cosmos = import.meta.cosmos;
+if (!cosmos) {
+  throw new Error("You need to apply vite-plugin-react-cosmos in your vite.config");
+}
+const options = cosmos.options;
 function DomFixtureLoader() {
-  const { decorators, fixtures } = import.meta.cosmos.globEager;
+  const { decorators, fixtures } = cosmos.glob;
   return CosmosDomFixtureLoader({
     decorators: Object.fromEntries(Object.entries(decorators).map(([path, exports]) => [
       path,

@@ -5,18 +5,24 @@ import { DomFixtureLoader as CosmosDomFixtureLoader } from "./lib"
 interface ImportMeta {
   cosmos: {
     options: Required<Options>
-    globEager: {
+    glob: {
       decorators: Record<string, { [key: string]: any }>
       fixtures: Record<string, { [key: string]: any }>
     }
   }
 }
 
-export const options = (import.meta as unknown as ImportMeta).cosmos.options
+const cosmos = (import.meta as unknown as ImportMeta).cosmos
+if (!cosmos) {
+  throw new Error(
+    "You need to apply vite-plugin-react-cosmos in your vite.config"
+  )
+}
+
+export const options = cosmos.options
 
 export function DomFixtureLoader() {
-  const { decorators, fixtures } = (import.meta as unknown as ImportMeta).cosmos
-    .globEager
+  const { decorators, fixtures } = cosmos.glob
 
   return CosmosDomFixtureLoader({
     /**
