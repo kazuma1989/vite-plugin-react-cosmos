@@ -14,7 +14,11 @@ function DomFixtureLoader() {
     ])),
     fixtures: Object.fromEntries(Object.entries(fixtures).map(([path, exports]) => [
       path,
-      { module: { default: exports } }
+      {
+        module: {
+          default: Object.fromEntries(Object.entries(exports).filter(([key]) => key !== "default"))
+        }
+      }
     ]))
   });
 }
