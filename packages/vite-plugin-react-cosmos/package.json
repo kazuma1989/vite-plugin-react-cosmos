@@ -29,7 +29,7 @@
     "build": "pnpm run build:js && pnpm run build:types",
     "build:js": "pnpm run build:js:client && pnpm run build:js:lib && pnpm run build:js:node",
     "build:js:client": "esbuild ./client/index.ts --outfile=./client/index.js --platform=browser --format=esm",
-    "build:js:lib": "esbuild ./client/lib.ts --inject:./client/shim-react.js --bundle --outfile=./client/lib.js --platform=browser --format=esm --external:react",
+    "build:js:lib": "esbuild ./client/lib.ts --inject:./client/shim-react.js --bundle --outfile=./client/lib.js --platform=browser --format=esm --external:react --minify",
     "build:js:node": "esbuild ./node/index.ts --bundle --outfile=./node/index.cjs --platform=node --external:es-module-lexer --external:fast-glob --external:vite",
     "build:types": "pnpm run build:types:node && pnpm run build:types:client",
     "build:types:client": "tsc --project ./client/tsconfig.json",
