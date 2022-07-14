@@ -38,13 +38,13 @@
   },
   "devDependencies": {
     "@tsconfig/vite-react": "1.0.0",
-    "@types/node": "16.x.x",
-    "@types/react": "18.0.12",
-    "esbuild": "0.14.43",
+    "@types/node": "18.0.4",
+    "@types/react": "18.0.15",
+    "esbuild": "0.14.49",
     "react-cosmos": "5.7.2",
     "regenerator-runtime": "0.13.9",
     "sirv": "2.0.2",
-    "vite": "2.9.10"
+    "vite": "3.0.0"
   },
   "peerDependencies": {
     "react": ">=17.0",
