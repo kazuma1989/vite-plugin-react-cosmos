@@ -1,3 +1,4 @@
+"use strict";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -846,7 +847,7 @@ function cosmos({
           }
         };
         return {
-          code: code.replaceAll("import.meta.cosmos", JSON.stringify(cosmos2).replaceAll(`"__DECORATORS__"`, `import.meta.globEager(${JSON.stringify(decoratorsGlob)})`).replaceAll(`"__FIXTURES__"`, `import.meta.globEager(${JSON.stringify(fixturesGlob)})`))
+          code: code.replaceAll("import.meta.cosmos", JSON.stringify(cosmos2).replaceAll(`"__DECORATORS__"`, `import.meta.glob(${JSON.stringify(decoratorsGlob)}, { eager: true })`).replaceAll(`"__FIXTURES__"`, `import.meta.glob(${JSON.stringify(fixturesGlob)}, { eager: true })`))
         };
       }
     },

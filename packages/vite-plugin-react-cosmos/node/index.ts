@@ -110,11 +110,11 @@ export default function cosmos({
             JSON.stringify(cosmos)
               .replaceAll(
                 `"__DECORATORS__"`,
-                `import.meta.globEager(${JSON.stringify(decoratorsGlob)})`
+                `import.meta.glob(${JSON.stringify(decoratorsGlob)}, { eager: true })`
               )
               .replaceAll(
                 `"__FIXTURES__"`,
-                `import.meta.globEager(${JSON.stringify(fixturesGlob)})`
+                `import.meta.glob(${JSON.stringify(fixturesGlob)}, { eager: true })`
               )
           ),
         }
